@@ -47,10 +47,19 @@ def findMax(low, high):
 
 
 """From previous tests, weve found that the radius is in the 200s"""
-best_probability, best_radius = findMax(200, 300)
-best_diameter = (2 * best_radius) / 1000
+def output():
+    best_probability, best_radius = findMax(230, 300);
+    best_diameter = (2 * best_radius) / 1000;
+    pi_estimation = 4 * (1 / best_diameter - 1);
 
-print(best_diameter, best_probability)
+
+    return best_radius, best_diameter, best_probability, pi_estimation
 
 
-print(4 * (1 / best_diameter - 1))
+radius, diameter, probability, pi = output();
+
+
+print("\n", "Radius: ", radius, "\n",
+    "Diameter: ", diameter, "\n",
+    "Probability: ", probability, "\n",
+    "Pi Estimation: ", pi)
