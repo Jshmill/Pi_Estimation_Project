@@ -7,6 +7,8 @@ TIMES = 2000000
 X = np.random.randint(0, squareSize, size=TIMES)
 Y = np.random.randint(0, squareSize, size=TIMES)
 
+# Given a radius, estimate ratio of hits (touching 2 
+# or 3 squares) and misses (touching 1 or 4 squares)
 def estimate_ratio_fixed(radius):
     # 1 square (fully inside)
     inside = (
@@ -20,13 +22,15 @@ def estimate_ratio_fixed(radius):
         (X**2 + Y**2 <= radius**2)
         | ((X - squareSize) ** 2 + Y**2 <= radius**2)
         | (X**2 + (Y - squareSize) ** 2 <= radius**2)
-        | ((X - squareSize) ** 2 + (Y - squareSize) ** 2 <= radius**2)
+        | ((X - squareSize) ** 2 + (Y - squareSize) 
+           ** 2 <= radius**2)
     )
     # valid = touches 2 or 3 squares
     valid = ~(inside | corner)
     return np.mean(valid)
 
-# Iterate over a range of radius values to determine max probability 
+# Iterate over a range of radius values 
+# to determine max probability 
 def findMax(low, high):
     best_radius = low
     best_probability = 0.0
@@ -37,26 +41,17 @@ def findMax(low, high):
     return best_probability, best_radius
 
 
-"""From previous tests, it's been found that the radius is in the 200s"""
+# From previous tests, it's been found that 
+# the radius is in the 200s
 def output():
-    best_probability, best_radius = findMax(200, 300)
-    best_diameter = (2 * best_radius)
-    pi_estimation = 4 * (1 / best_diameter - 1)
-    return best_radius, best_diameter, best_probability, pi_estimation
+    probability, radius = findMax(200, 300)
+    pi_estimation = 4 * (1 / (2 * radius) - 1)
+    print(f"""  
+    Radius: {radius}
+    Diameter: {2 * radius}
+    Probability: {probability}
+    Pi Estimation: {pi_estimation}
+    """)
 
-radius, diameter, probability, pi = output()
-
-print(
-    "\n",
-    "Radius: ",
-    radius,
-    "\n",
-    "Diameter: ",
-    diameter,
-    "\n",
-    "Probability: ",
-    probability,
-    "\n",
-    "Pi Estimation: ",
-    pi,
-)
+# Run the program
+output()
