@@ -1,4 +1,4 @@
-# pi_estimation.py
+# 3d_test
 import numpy as np
 
 # Initialize random points in a square of size 1000x1000
@@ -6,24 +6,34 @@ squareSize = 1000
 TIMES = 2000000
 X = np.random.randint(0, squareSize, size=TIMES)
 Y = np.random.randint(0, squareSize, size=TIMES)
+Z = np.random.randint(0, squareSize, size=TIMES)
 
 
 # Given a radius, estimate ratio of hits (touching 2
-# or 3 squares) and misses (touching 1 or 4 squares)
+# or 3 cubes) and misses (touching 1 or 4 cubes)
 def estimate_ratio_fixed(radius):
-    # 1 square (fully inside)
+    # 1 cube (fully inside)
     inside = (
         (X >= radius)
         & (X <= squareSize - radius)
         & (Y >= radius)
         & (Y <= squareSize - radius)
+        & (Z >= radius)
+        & (Z <= squareSize - radius)
     )
-    # 4 squares (corner cases)
+    # 4 cubes (corner cases)
     corner = (
-        (X**2 + Y**2 <= radius**2)
-        | ((X - squareSize) ** 2 + Y**2 <= radius**2)
-        | (X**2 + (Y - squareSize) ** 2 <= radius**2)
-        | ((X - squareSize) ** 2 + (Y - squareSize) ** 2 <= radius**2)
+        (X**2 + Y**2 + Z**2 <= radius**2)
+        | ((X - squareSize) ** 2 + Y**2 + Z**2 <= radius**2)
+        | (X**2 + (Y - squareSize) ** 2 + Z**2 <= radius**2)
+        | (X**2 + Y**2 + (Z - squareSize) ** 2 <= radius**2)
+        | ((X - squareSize) ** 2 + (Y - squareSize) ** 2 + Z**2 <= radius**2)
+        | (X**2 + (Y - squareSize) ** 2 + (Z - squareSize) ** 2 <= radius**2)
+        | ((X - squareSize) ** 2 + Y**2 + (Z - squareSize) ** 2 <= radius**2)
+        | (
+            (X - squareSize) ** 2 + (Y - squareSize) ** 2 + (Z - squareSize) ** 2
+            <= radius**2
+        )
     )
     # valid = touches 2 or 3 squares
     valid = ~(inside | corner)
