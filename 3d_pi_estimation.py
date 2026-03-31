@@ -53,10 +53,9 @@ def findMax(low, high):
 
 
 def output():
-    prob, radius_pixels = findMax(100, 220)
+    prob, radius_pixels = findMax(250, 350)
     radius = radius_pixels
-    # pi_estimation = 4 * (1 / (2 * radius) - 1) OUTDATED
-    pi_estimation = (-3 - 12 * radius**2 + 12 * radius) / (radius * (2 * radius - 3))
+    pi_estimation = (3 * (4 * radius**2 - 4 * radius + 1)) / (2 * radius**2)
     print(f"""
     Radius: {radius}
     Diameter: {2 * radius}
@@ -70,11 +69,10 @@ output()
 
 """
 The Formula is as follows:
-Pvalid = 1 - [(1 - 2r)^3 + 3 * πr^2 - 2 * (4 / 3) * πr^3]
+Pvalid = 1 - [(1 - 2r)^3 +  (4 / 3) * πr^3]
 To find the max P, we must find the derivative of P with respect to r and set it to 0.
 P' = (4π + 24) * r^2 + (-6π - 24) * r + 6 = 0
 
 
 SEE Work.jpeg for further details
 """
-
