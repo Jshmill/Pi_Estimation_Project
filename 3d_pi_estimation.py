@@ -1,10 +1,10 @@
 import numpy as np
 
-# Cube size and number of samples
+# CUBE SIZE AND NUMBER OF SAMPLES
 S = 1000
 TIMES = 2_000_000
 
-# Random sphere centers
+# RANDOM SPHERE CENTERS
 X = np.random.randint(0, S, size=TIMES)
 Y = np.random.randint(0, S, size=TIMES)
 Z = np.random.randint(0, S, size=TIMES)
@@ -13,7 +13,7 @@ Z = np.random.randint(0, S, size=TIMES)
 def estimate_ratio_fixed(radius):
     r2 = radius**2
 
-    # 1 cube: fully inside the cube, not near any boundary
+    # 1 CUBE: FULLY INSIDE THE CUBE, NOT NEAR ANY BOUNDARY
     inside = (
         (X >= radius)
         & (X <= S - radius)
@@ -23,7 +23,7 @@ def estimate_ratio_fixed(radius):
         & (Z <= S - radius)
     )
 
-    # 8 corners: quarter-spheres at cube vertices
+    # 8 CORNERS: EIGTH-SPHERES AT CUBE VERTICES
     corner = (
         (X**2 + Y**2 + Z**2 <= r2)
         | ((X - S) ** 2 + Y**2 + Z**2 <= r2)
@@ -35,13 +35,13 @@ def estimate_ratio_fixed(radius):
         | ((X - S) ** 2 + (Y - S) ** 2 + (Z - S) ** 2 <= r2)
     )
 
-    # Valid spheres: edges or corners, but not fully inside cube
+    # VALID SPHERES: EDGES OR CORNERS, BUT NOT FULLY INSIDE CUBE
     valid = ~(inside | corner)
 
     return np.mean(valid)
 
 
-# Example: iterate over radius
+# ITERATE OVER RADIUS
 def findMax(low, high):
     best_radius = low
     best_prob = 0.0
@@ -53,8 +53,7 @@ def findMax(low, high):
 
 
 def output():
-    prob, radius_pixels = findMax(250, 350)
-    radius = radius_pixels
+    prob, radius = findMax(250, 350)
     pi_estimation = (3 * (4 * radius**2 - 4 * radius + 1)) / (2 * radius**2)
     print(f"""
     Radius: {radius}
