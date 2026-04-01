@@ -64,14 +64,3 @@ def output():
 
 
 output()
-
-
-"""
-The Formula is as follows:
-Pvalid = 1 - [(1 - 2r)^3 +  (4 / 3) * πr^3]
-To find the max P, we must find the derivative of P with respect to r and set it to 0.
-P' = (4π + 24) * r^2 + (-6π - 24) * r + 6 = 0
-
-
-SEE Work.jpeg for further details
-"""
