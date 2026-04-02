@@ -21,11 +21,11 @@ To run either of the scripts, ensure you have Python installed on your system.
 You can execute the scripts using the command line:
 
 ```bash
-python pi_estimation.py
+python3 pi_estimation.py
 ```
 
 or
 
 ```bash
-python 3d_pi_estimation.py
+python3 3d_pi_estimation.py
 ```
